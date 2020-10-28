@@ -1,29 +1,29 @@
 <div class="main-content">
-  <div class="container-fluid">
-  <div class="row justify-content-center">
-    <div class="col-md-5">
-      <div class="card card-profile">
-          <div class="card-avatar">
-              <a href="javascript:void(0)">
-                  <img class="img" src="assets/img/crm1.png" />
-              </a>
-          </div>
-          <div class="card-body">
-            <mat-form-field appearance="legacy">
-              <mat-label>User Name</mat-label>
-              <input matInput [(ngModel)]="user" #userNameId>
-            </mat-form-field>
-            <mat-form-field appearance="legacy">
-              <mat-label>User Password</mat-label>
-              <input matInput type="password" [(ngModel)]="password" #userPasswordId>
-            </mat-form-field>
-            <button mat-raised-button class="mt-3 btn btn-gray btn-round pull-center" (click)="getLogin()">Login</button>
-            <div *ngIf="loginError">
-              <b>{{loginErrorText}}</b>
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-md-5">
+                <div class="card card-profile">
+                    <div class="card-avatar">
+                        <a href="javascript:void(0)">
+                            <img class="img" src="assets/img/crm14.png" />
+                        </a>
+                    </div>
+                    <div class="card-body">
+                        <mat-form-field appearance="legacy">
+                            <mat-label>User Name</mat-label>
+                            <input matInput [(ngModel)]="user" #userNameId>
+                        </mat-form-field>
+                        <mat-form-field appearance="legacy">
+                            <mat-label>User Password</mat-label>
+                            <input matInput type="password" [(ngModel)]="password" #userPasswordId>
+                        </mat-form-field>
+                        <button mat-raised-button class="mt-3 btn btn-gray btn-round pull-center" (click)="getLogin()">Login</button>
+                        <div *ngIf="loginError">
+                            <b>{{loginErrorText}}</b>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
-      </div>
+        </div>
     </div>
-  </div>
-  </div>
 </div>

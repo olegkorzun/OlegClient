@@ -3,8 +3,8 @@ import { Component, OnInit } from '@angular/core';
 //constants an interfaces
 export const ImgPath: string  = "assets/img/usr/";
 export const FilesPath: string= "files/";
-//export const SERV: string   = '45.83.43.173';
-export const SERV: string     = '192.117.146.228'; 
+export const SERV: string   = '45.83.43.173';
+//export const SERV: string     = '192.117.146.228'; 
 export const PORT: string     = '3000';
 
 /* STUDENTS APPS */
