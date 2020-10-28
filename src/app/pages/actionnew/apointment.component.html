@@ -1,0 +1,107 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <mat-card class="p-0">
+            <mat-card-header class="header-grey">
+                <div class="row">
+                    <div class="col-md-2">
+                        <action-type [actionType]="'Appointment'"></action-type>
+                    </div>
+                    <div class="col-md-6">
+                        <mat-card-title>Appointment</mat-card-title>
+                    </div>
+                </div>
+            </mat-card-header>
+            <mat-card-content class="p-4">
+                <form [formGroup]="individualForm" (ngSubmit)="onSubmit(individualForm.value)">
+                    <div class="row">
+                        <!--First row-->
+                        <div class="col-md-4">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <p>Name :</p>
+                                </div>
+                                <div class="col-md-9">
+                                    <p>{{person.first_name}} {{person.last_name}}</p>
+                                </div>
+                                <div class="col-md-3">
+                                    <p>Email :</p>
+                                </div>
+                                <div class="col-md-9">
+                                    <p>{{person.email}}</p>
+                                </div>
+                                <div class="col-md-3">
+                                    <p>Phone :</p>
+                                </div>
+                                <div class="col-md-9">
+                                    <p>{{person.phone_1}}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div dir="rtl" class="col-md-4">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p>
+                                        <mat-form-field appearance="legacy">
+                                            <mat-label>Task to user</mat-label>
+                                            <mat-select formControlName=user_id (change)="ChangingValue($event)">
+                                                <mat-option *ngFor="let user of users" [value]="user.rtuser">
+                                                    {{user.first_name}} {{user.last_name}}
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p>
+                                        <mat-form-field appearance="legacy">
+                                            <mat-label>Location</mat-label>
+                                            <mat-select formControlName="location" (change)="ChangingValue($event)">
+                                                <mat-option *ngFor="let branch of branches" [value]="branch.branch_id">
+                                                    {{branch.name}}
+                                                </mat-option>
+                                            </mat-select>
+                                            <mat-error *ngIf="individualForm.controls['location'].invalid && individualForm.controls['location'].touched">
+                                                Location is <strong>required</strong>
+                                            </mat-error>
+                                        </mat-form-field>
+                                    </p>
+                                </div>
+                            </div>
+                            <p>
+                                <mat-form-field appearance="legacy">
+                                    <mat-label>Task Message</mat-label>
+                                    <textarea formControlName="message" matInput matTooltip="Please fill this data"></textarea>
+                                    <mat-error *ngIf="individualForm.controls['message'].invalid && individualForm.controls['message'].touched">
+                                        Message is <strong>required</strong>
+                                    </mat-error>
+                                </mat-form-field>
+                            </p>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p>
+                                        <mat-form-field appearance="legacy">
+                                            <mat-label>start date</mat-label>
+                                            <input matInput type="date" formControlName="start_date" />
+                                        </mat-form-field>
+                                    </p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p>
+                                        <mat-form-field appearance="legacy">
+                                            <mat-label>start date</mat-label>
+                                            <input matInput type="time" formControlName="start_time" />
+                                        </mat-form-field>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 pad">
+                            <button mat-raised-button type="submit" class="mr-3 mb-md-3 button-green-outline">Create</button>
+                            <button mat-raised-button (click)="cancel()" class="button-orange-outline">Cancel</button>
+                        </div>
+                    </div>
+                </form>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>

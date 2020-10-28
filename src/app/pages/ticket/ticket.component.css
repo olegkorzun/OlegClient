@@ -1,0 +1,17 @@
+card {
+    padding-bottom: 0;
+    padding-top: 0;
+}
+p {
+    margin-bottom: 0;
+    margin-left: 1rem;
+}
+.example-container {
+    height: 400px;
+    overflow: auto;
+  }
+  
+  table {
+    width: 100%;
+  }
+  

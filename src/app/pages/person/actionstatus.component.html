@@ -1,0 +1,33 @@
+
+
+<div [ngSwitch]="status">
+  <div *ngSwitchCase="'new'">
+    <mat-icon 
+    aria-hidden="false" 
+    class="menu_icon blue-icon"
+    matTooltip="New"
+    aria-label="Task menu">add</mat-icon>
+  </div>
+  <div *ngSwitchCase="'completed'">
+    <mat-icon 
+    aria-hidden="false" 
+    class="menu_icon lime-icon"
+    matTooltip="Completed"
+    aria-label="Task menu">done</mat-icon>
+  </div>
+  <div *ngSwitchCase="'canceled'">
+    <mat-icon 
+    aria-hidden="false" 
+    class="menu_icon"
+    color = "warn"
+    matTooltip="Canceled"
+    aria-label="Task menu">clear</mat-icon>
+  </div>
+  <div *ngSwitchDefault>
+
+  </div>
+</div>
+
+
+
+    

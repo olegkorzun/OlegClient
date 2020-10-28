@@ -1,0 +1,77 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-6">
+        <button mat-raised-button class="mb-3 btn btn-success btn-round pull-center" (click)="sendMessage()">Add New Ticket</button>        
+        <div *ngIf="tableVisible" class="example-container mat-elevation-z8">
+          <table mat-table [dataSource]="dataSource">
+            <!-- Checkbox Column -->
+            <ng-container matColumnDef="select">
+              <th mat-header-cell *matHeaderCellDef>
+                #
+              </th>
+              <td mat-cell *matCellDef="let row">
+                <mat-checkbox  
+                  matBadgeColor="warn"
+                  (click)=cleanAll($event,row)
+                  (change)="$event ? selection.toggle(row) : null"
+                  [checked]="selection.isSelected(row)"
+                ></mat-checkbox>
+              </td>
+            </ng-container>
+            <!-- ticket_id Column -->
+            <ng-container matColumnDef="ticket_id">
+              <th mat-header-cell *matHeaderCellDef> Id </th>
+              <td 
+                mat-cell 
+                *matCellDef="let element; let i = index;"
+                [matBadge]="badgeCounter[i].counter" 
+                [matBadgeHidden]="badgeCounter[i].counter==0"
+              > {{element.ticket_id}} </td>
+            </ng-container>
+            <!-- eq_type Column -->
+            <ng-container matColumnDef="req_type">
+              <th mat-header-cell *matHeaderCellDef> Type </th>
+              <td mat-cell *matCellDef="let element"> {{element.req_type}} </td>
+            </ng-container>
+            <!-- req_date Column -->
+            <ng-container matColumnDef="req_date">
+              <th mat-header-cell *matHeaderCellDef> Date </th>
+              <td mat-cell *matCellDef="let element"> {{element.req_date | date : short}} </td>
+            </ng-container>
+            <!-- ans_type Column -->
+            <ng-container matColumnDef="ans_type">
+              <th mat-header-cell *matHeaderCellDef> Status </th>
+              <td mat-cell *matCellDef="let element"> {{element.ans_type}} </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;" style="cursor: pointer;" (click)="clickRow(row)"></tr>
+          </table>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div *ngIf="messagesVisible" class="example-container mat-elevation-z8" style="padding: 1rem;">
+          <form #f="ngForm"  novalidate>
+            <mat-form-field appearance="legacy">
+              <mat-label>New Message Text</mat-label>
+              <textarea matInput name="message_text" [(ngModel)]="message_text"></textarea>
+              <!--input matInput name="message_text" [(ngModel)]="message_text"-->
+            </mat-form-field>
+            <button mat-raised-button class="btn btn-info btn-round pull-center" (click)="sendMessage()">Send</button>        
+          </form>
+          <div *ngFor="let message of messages" >
+            <div class="card" [ngStyle]="{'background-color':message.cat === 'student' ? '#b3e5fc' : '#c8e6c9' }">
+              <p>
+                {{message.name}}
+                {{message.date | date : "HH:mm:ss"}}
+                <br/>
+                {{message.mess}}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

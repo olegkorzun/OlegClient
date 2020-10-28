@@ -1,0 +1,84 @@
+<div [ngSwitch]="actionType">
+    <div *ngSwitchCase="'LID'">
+      <mat-icon 
+      aria-hidden="false" 
+      class="menu_icon blue-icon"
+      matTooltip="Lead"
+      aria-label="Task menu">emoji_people</mat-icon>
+    </div>
+    <div *ngSwitchCase="'Appointment'">
+      <mat-icon 
+      aria-hidden="false" 
+      class="menu_icon"
+      color = "accent"
+      matTooltip="Appointment"
+      aria-label="Task menu">perm_contact_calendar</mat-icon>
+    </div>
+    <div *ngSwitchCase="'Email'">
+      <mat-icon 
+      aria-hidden="false" 
+      class="menu_icon"
+      color = "primary"
+      matTooltip="Email"
+      aria-label="Task menu">mail_outline</mat-icon>
+    </div>
+    <div *ngSwitchCase="'SMS'">
+      <mat-icon 
+      aria-hidden="false" 
+      class="menu_icon"
+      color = "primary"
+      matTooltip="SMS"
+      aria-label="Task menu">chat</mat-icon>
+    </div>
+    <div *ngSwitchCase="'Comment'">
+      <mat-icon 
+      aria-hidden="false" 
+      class="menu_icon"
+      color = "primary"
+      matTooltip="Comment"
+      aria-label="Task menu">info</mat-icon>
+    </div>
+    <div *ngSwitchCase="'Task'">
+      <mat-icon 
+      aria-hidden="false" 
+      class="menu_icon"
+      color = "accent"
+      matTooltip="Task"
+      aria-label="Task menu">turned_in_not</mat-icon>
+    </div>
+    <div *ngSwitchCase="'Phone'">
+      <mat-icon 
+      aria-hidden="false" 
+      class="menu_icon"
+      color = "primary"
+      matTooltip="Phone"
+      aria-label="Task menu">phone</mat-icon>
+    </div>
+    <div *ngSwitchCase="'NotRelevant'">
+      <mat-icon 
+      aria-hidden="false" 
+      class="menu_icon"
+      color = "warn"
+      matTooltip="Not relevant"
+      aria-label="Task menu">cancel</mat-icon>
+    </div>
+    <div *ngSwitchCase="'HR'">
+
+      
+    </div>
+    <div *ngSwitchCase="'Proposal'">
+      <mat-icon 
+      aria-hidden="false" 
+      class="menu_icon lime-icon"
+      matTooltip="Contract"
+      aria-label="Task menu">library_books</mat-icon>
+    </div>
+    <div *ngSwitchCase="'new'">
+
+      
+    </div>
+    <div *ngSwitchDefault>
+
+      
+    </div>
+</div>

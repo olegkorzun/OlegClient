@@ -1,0 +1,534 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <mat-card [ngStyle]="{'padding':'0px'}">
+            <mat-card-header [ngStyle]="{'background-color':'#607D8B', 'color':'white', 'padding-top':'1rem'}">
+                <div class="row">
+                    <div class="col-md-2">
+                        <action-type [actionType]="'Proposal'"></action-type>
+                    </div>
+                    <div class="col-md-3">
+                        <mat-card-title>Contract</mat-card-title>
+                    </div>
+                </div>
+            </mat-card-header>
+            <mat-card-content [ngStyle]="{'padding':'2rem'}">
+                <mat-horizontal-stepper #stepper>
+                    <mat-step [stepControl]="contractFormGroup" errorMessage="Data is required.">
+                        <form [formGroup]="contractFormGroup">
+                            <ng-template matStepLabel>Fill Basic Contract Data</ng-template>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <p>Name</p>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <p>{{person.first_name}} {{person.last_name}}</p>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <p>Id</p>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <p>{{person.country_id}}</p>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <p>Address</p>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <p>{{person.address}}</p>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <p>Phone</p>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <p>{{person.phone_1}}</p>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <p>Email</p>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <p>{{person.email}}</p>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <p>Date</p>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <p>{{create_date | date: 'dd/MM/yyyy'}}</p>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <p>Path</p>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <p>{{contract_product}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <p>
+                                        <mat-form-field appearance="legacy">
+                                            <mat-label>Start Date</mat-label>
+                                            <input type="date" matInput placeholder="start date" formControlName="start_date" required>
+                                        </mat-form-field>
+                                    </p>
+                                    <p>
+                                        <mat-form-field appearance="legacy">
+                                            <mat-label>Contract Amount</mat-label>
+                                            <input type="text" matInput placeholder="Contract Amount" formControlName="amount" required>
+                                        </mat-form-field>
+                                    </p>
+                                    <p>
+                                        <mat-form-field appearance="legacy">
+                                            <mat-label>Contract Amount</mat-label>
+                                            <mat-select class="form-control" formControlName="pathStatus" (change)="ChangingValue($event)">
+                                                <mat-option *ngFor="let path of pathStatus" [value]="path.code">
+                                                    {{path.status}}
+                                                </mat-option>
+                                            </mat-select>
+                                            <mat-error *ngIf="contractFormGroup.controls['pathStatus'].invalid && contractFormGroup.controls['pathStatus'].touched">
+                                                Location is <strong>required</strong>
+                                            </mat-error>
+                                        </mat-form-field>
+                                    </p>
+                                </div>
+                            </div>
+                            <div>
+                                <p>Go to a different step to see the error state</p>
+                                <button mat-button matStepperNext>Next</button>
+                            </div>
+                        </form>
+                    </mat-step>
+                    <mat-step [stepControl]="coursesFormGroup" errorMessage="Address is required.">
+                        <form [formGroup]="coursesFormGroup">
+                            <ng-template matStepLabel>Fill out courses</ng-template>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <h4 class="mb-3"> {{contract_courses[0].product_group_description}}</h4>
+                                    <div formArrayName="coursesList">
+                                        <div *ngFor="let list1 of coursesList1.controls; let i = index">
+                                            <div [formGroup]="list1" class="row">
+                                                <div class="col-2">
+                                                    <mat-checkbox formControlName="checkCourse" color='primary'></mat-checkbox>
+                                                </div>
+                                                <div class="col-6">
+                                                    {{contract_courses[i].description}}
+                                                </div>
+                                                <div class="col-4">
+                                                    <mat-form-field appearance="legacy">
+                                                        <input type="text" matInput formControlName="amountCourse">
+                                                    </mat-form-field>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <h4 class="mb-3"> {{single_courses[0].product_group_description}}</h4>
+                                    <div formArrayName="singleCoursesList">
+                                        <div *ngFor="let list2 of singleCoursesList1.controls; let i = index">
+                                            <div [formGroup]="list2" class="row">
+                                                <div class="col-2">
+                                                    <mat-checkbox formControlName="checkSingleCourse" color='primary'></mat-checkbox>
+                                                </div>
+                                                <div class="col-6">
+                                                    {{single_courses[i].description}}
+                                                </div>
+                                                <div class="col-4">
+                                                    <mat-form-field appearance="legacy">
+                                                        <input type="text" matInput formControlName="amountSingleCourse">
+                                                    </mat-form-field>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <h4 class="mb-3"> Create Contract</h4>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <p>Name</p>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <p>{{person.first_name}} {{person.last_name}}</p>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <p>Id</p>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <p>{{person.country_id}}</p>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <p>Address</p>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <p>{{person.address}}</p>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <p>Phone</p>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <p>{{person.phone_1}}</p>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <p>Email</p>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <p>{{person.email}}</p>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <p>Date</p>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <p>{{create_date | date: 'dd/MM/yyyy'}}</p>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <p>Path</p>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <p>{{contract_product}}</p>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <p>Start Date</p>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <p>{{contractFormGroup.value["start_date"] | date: 'dd/MM/yyyy'}}</p>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <p>Amount</p>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <p>{{contractFormGroup.value["amount"]}}</p>
+                                        </div>
+                                    </div>
+                                    <button mat-raised-button (click)="renderContract()" class="mr-5 mb-md-3 button-blue-outline">Render and Confirm Contract</button>
+                                </div>
+                            </div>
+                            <div>
+                                <p>Go to a different step to see the error state</p>
+                                <button mat-button matStepperPrevious>Back</button>
+                                <button mat-button matStepperNext>Next</button>
+                            </div>
+                        </form>
+                    </mat-step>
+                    <mat-step [stepControl]="paymentsFormGroup" errorMessage="Address is required.">
+                        <form [formGroup]="paymentsFormGroup">
+                            <ng-template matStepLabel>Fill out payments</ng-template>
+
+                            <mat-card class="m-2">
+                                <mat-card-header>
+                                    <mat-card-title>
+                                        <mat-checkbox formControlName="payment_cash" color='primary'></mat-checkbox> Cash</mat-card-title>
+                                </mat-card-header>
+                                <mat-card-content>
+                                    <div *ngIf="paymentsFormGroup.value['payment_cash']" class="row">
+                                        <div class="col-6">
+                                            <p>
+                                                <mat-form-field appearance="legacy">
+                                                    <mat-label>payment cash date</mat-label>
+                                                    <input type="date" matInput placeholder="payment cash date" formControlName="payment_cash_date" required>
+                                                </mat-form-field>
+                                            </p>
+                                        </div>
+                                        <div class="col-6">
+                                            <p>
+                                                <mat-form-field appearance="legacy">
+                                                    <mat-label>Cash Amount</mat-label>
+                                                    <input type="text" matInput placeholder="Cash Amount" formControlName="payment_cash_amount" required>
+                                                </mat-form-field>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </mat-card-content>
+                            </mat-card>
+
+                            <mat-card class="m-2">
+                                <mat-card-header>
+                                    <div class="row">
+                                        <mat-card-title>
+                                            <mat-checkbox formControlName="payment_bank" color='primary'></mat-checkbox> Bank transfer</mat-card-title>
+                                    </div>
+                                </mat-card-header>
+                                <mat-card-content>
+                                    <div *ngIf="paymentsFormGroup.value['payment_bank']" class="row">
+                                        <div class="col-6">
+                                            <p>
+                                                <mat-form-field appearance="legacy">
+                                                    <mat-label>Payment bank date</mat-label>
+                                                    <input type="date" matInput placeholder="payment bank date" formControlName="payment_bank_date" required>
+                                                </mat-form-field>
+                                            </p>
+                                        </div>
+                                        <div class="col-6">
+                                            <p>
+                                                <mat-form-field appearance="legacy">
+                                                    <mat-label>Bank transfer amount</mat-label>
+                                                    <input type="text" matInput placeholder="Bank transfer amount" formControlName="payment_bank_amount" required>
+                                                </mat-form-field>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </mat-card-content>
+                            </mat-card>
+                            <mat-card class="m-2">
+                                <mat-card-header>
+                                    <mat-card-title>
+                                        <mat-checkbox formControlName="payment_card" color='primary'></mat-checkbox> Credit Card</mat-card-title>
+                                </mat-card-header>
+                                <mat-card-content>
+                                    <div *ngIf="paymentsFormGroup.value['payment_card']" class="row">
+                                        <div class="col-4">
+                                            <p>
+                                                <mat-form-field appearance="legacy">
+                                                    <mat-label>Number of payments</mat-label>
+                                                    <input type="number" matInput placeholder="Number of payments" formControlName="payment_card_num" required>
+                                                </mat-form-field>
+                                            </p>
+                                        </div>
+                                        <div class="col-4">
+                                            <p>
+                                                <mat-form-field appearance="legacy">
+                                                    <mat-label>Amount</mat-label>
+                                                    <input type="text" matInput placeholder="Amount" formControlName="payment_card_amount" required>
+                                                </mat-form-field>
+                                            </p>
+                                        </div>
+                                        <div class="col-4">
+                                            <p>
+                                                <mat-form-field appearance="legacy">
+                                                    <mat-label>Card nummer</mat-label>
+                                                    <input type="text" matInput placeholder="Card nummer" formControlName="payment_card_card" required>
+                                                </mat-form-field>
+                                            </p>
+                                        </div>
+
+                                    </div>
+                                </mat-card-content>
+                            </mat-card>
+                            <mat-card class="m-2">
+                                <mat-card-header>
+                                    <mat-card-title>
+                                        <mat-checkbox formControlName="payment_check" color='primary'></mat-checkbox> Payment by check</mat-card-title>
+                                </mat-card-header>
+                                <mat-card-content>
+                                    <div *ngIf="paymentsFormGroup.value['payment_check']" class="row">
+                                        <div class="col-3">
+                                            <p>
+                                                <mat-label>Number of payments</mat-label>
+                                                <select formControlName="payment_check_num" (change)="onChangeCheks($event)">
+                                                    <option value=""></option>
+                                                    <option *ngFor="let i of [1,2,3,4,5,6,7,8,9,10]">{{i}}</option>
+                                                </select>
+                                            </p>
+                                        </div>
+                                        <div formArrayName="payments_check">
+                                            <div *ngFor="let payment of payments_check1.controls; let i = index">
+                                                <div [formGroup]="payment" class="row">
+                                                    <div class="col-2">
+                                                        <p>{{i+1}}</p>
+                                                    </div>
+                                                    <div class="col-2">
+                                                        <mat-form-field appearance="legacy">
+                                                            <mat-label>Bank</mat-label>
+                                                            <input type="text" matInput formControlName="bank">
+                                                        </mat-form-field>
+                                                    </div>
+                                                    <div class="col-4">
+                                                        <mat-form-field appearance="legacy">
+                                                            <mat-label>Branch</mat-label>
+                                                            <input type="text" matInput formControlName="branch">
+                                                        </mat-form-field>
+                                                    </div>
+                                                    <div class="col-4">
+                                                        <mat-form-field appearance="legacy">
+                                                            <mat-label>Accaunt</mat-label>
+                                                            <input type="text" matInput formControlName="accaunt">
+                                                        </mat-form-field>
+                                                    </div>
+                                                    <div class="col-4">
+                                                        <mat-form-field appearance="legacy">
+                                                            <mat-label>Check Number</mat-label>
+                                                            <input type="text" matInput formControlName="checkNumber">
+                                                        </mat-form-field>
+                                                    </div>
+                                                    <div class="col-4">
+                                                        <mat-form-field appearance="legacy">
+                                                            <mat-label>Check date</mat-label>
+                                                            <input type="date" matInput formControlName="checkDate">
+                                                        </mat-form-field>
+                                                    </div>
+                                                    <div class="col-4">
+                                                        <mat-form-field appearance="legacy">
+                                                            <mat-label>Check Amount</mat-label>
+                                                            <input type="text" matInput formControlName="checkAmount">
+                                                        </mat-form-field>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </mat-card-content>
+                            </mat-card>
+
+                            <div>
+                                <p>Go to a different step to see the error state</p>
+                                <button mat-button matStepperPrevious>Back</button>
+                                <button mat-button matStepperNext>Next</button>
+                            </div>
+                        </form>
+                    </mat-step>
+                    <mat-step>
+                        <ng-template matStepLabel>Finaly - Student Registration</ng-template>
+                        <h2>Create student</h2>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <h4 class="mb-3">Student Data</h4>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <p>Name</p>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <p>{{person.first_name}} {{person.last_name}}</p>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <p>Id</p>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <p>{{person.country_id}}</p>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <p>Address</p>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <p>{{person.address}}</p>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <p>Phone</p>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <p>{{person.phone_1}}</p>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <p>Email</p>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <p>{{person.email}}</p>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <p>Date</p>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <p>{{create_date | date: 'dd/MM/yyyy'}}</p>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <p>Path</p>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <p>{{contract_product}}</p>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <p>Start Date</p>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <p>{{contractFormGroup.value["start_date"] | date: 'dd/MM/yyyy'}}</p>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <p>Amount</p>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <p>{{contractFormGroup.value["amount"]}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <h4 class="mb-3">Courses Data</h4>
+                                <div *ngFor="let list1 of coursesList1.controls; let i = index">
+                                    <div *ngIf="list1.value['checkCourse']" [formGroup]="list1" class="row">
+                                        <div class="col-8">
+                                            <p>{{contract_courses[i].description}}</p>
+                                        </div>
+                                        <div class="col-4">
+                                            <p>{{list1.value["amountCourse"]}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div *ngFor="let list2 of singleCoursesList1.controls; let i = index">
+                                    <div *ngIf="list2.value['checkSingleCourse']" [formGroup]="list2" class="row">
+                                        <div class="col-8">
+                                            <p>{{single_courses[i].description}}</p>
+                                        </div>
+                                        <div class="col-4">
+                                            <p>{{list2.value["amountSingleCourse"]}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <h4 class="mb-3">Payment Data</h4>
+
+                                <div *ngIf="paymentsFormGroup.value['payment_cash']" class="row">
+                                    <h5>Payment Cash</h5>
+                                    <div class="col-6">
+                                        <p>{{paymentsFormGroup.value['payment_cash_amount']}}</p>
+                                    </div>
+                                    <div class="col-6">
+                                        <p>{{paymentsFormGroup.value["payment_cash_date"] | date: 'dd/MM/yyyy'}}</p>
+                                    </div>
+                                </div>
+
+                                <div *ngIf="paymentsFormGroup.value['payment_bank']" class="row">
+                                    <h5>Payment Bank Transfer</h5>
+                                    <div class="col-6">
+                                        <p>{{paymentsFormGroup.value['payment_bank_amount']}}</p>
+                                    </div>
+                                    <div class="col-6">
+                                        <p>{{paymentsFormGroup.value["payment_bank_date"] | date: 'dd/MM/yyyy'}}</p>
+                                    </div>
+                                </div>
+
+                                <div *ngIf="paymentsFormGroup.value['payment_card']" class="row">
+                                    <h5>Payment Credit Card</h5>
+                                    <div class="col-6">
+                                        <p>{{paymentsFormGroup.value['payment_card_amount']}}</p>
+                                    </div>
+                                    <div class="col-6">
+                                        <p>{{paymentsFormGroup.value['payment_card_num']}} payments</p>
+                                    </div>
+                                </div>
+
+                                <div *ngIf="paymentsFormGroup.value['payment_card']">
+                                    <div *ngFor="let list3 of payments_check1.controls; let i = index">
+                                        <div [formGroup]="list3" class="row">
+                                            <div class="col-8">
+                                                <p>{{list3.value['checkAmount']}}</p>
+                                            </div>
+                                            <div class="col-4">
+                                                <p>{{list3.value["checkDate"] | date: 'dd/MM/yyyy'}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button mat-raised-button (click)="renderContract()" class="mr-5 mb-md-3 button-green-outline">Create new student</button>
+                        <button mat-raised-button (click)="cancel()" class="button-orange-outline">Cancel</button>
+
+
+                        <div>
+                            <button mat-button matStepperPrevious>Back</button>
+                            <button mat-button (click)="stepper.reset()">Reset</button>
+                        </div>
+                    </mat-step>
+                </mat-horizontal-stepper>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>
+
+<jw-modal id="custom-modal-7">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closeModal('custom-modal-7');">
+    <span aria-hidden="true">&times;</span>
+  </button>
+    <h4>Click below to download Contract</h4>
+    <a [href]="urlSafe">{{urlSafe}}</a>
+</jw-modal>

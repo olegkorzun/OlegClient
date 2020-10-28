@@ -1,0 +1,209 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class=col-sm-11>
+                <form [formGroup]="personForm" (ngSubmit)="onSubmit(personForm.value)">
+                    <mat-chip-list aria-label="Fish selection">
+                        <mat-chip>Registration {{lead.entry_timestamp | date: 'dd/MM/yyyy'}}</mat-chip>
+                        <mat-chip>Source {{lead.source}}</mat-chip>
+                        <mat-chip color="primary" selected>Status{{lead.status}}</mat-chip>
+                        <mat-chip color="accent" selected>Priority high</mat-chip>
+                    </mat-chip-list>
+                    <mat-tab-group>
+                        <mat-tab label="Personal Data">
+                            <mat-card>
+                                <div class="row">
+                                    <!--First row-->
+                                    <div class="col-md-3">
+                                        <p>
+                                            <mat-form-field appearance="legacy">
+                                                <mat-label>First Name</mat-label>
+                                                <input matInput placeholder="First Name" formControlName="first_name" matTooltip="Please fill this data">
+                                            </mat-form-field>
+                                        </p>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <p>
+                                            <mat-form-field appearance="legacy">
+                                                <mat-label>Last Name</mat-label>
+                                                <input matInput placeholder="Last Name" formControlName="last_name" matTooltip="Please fill this data">
+                                            </mat-form-field>
+                                        </p>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <p>
+                                            <mat-form-field appearance="legacy">
+                                                <mat-label>Teudat Zehut</mat-label>
+                                                <input matInput placeholder="Teudat Zehut" formControlName="country_id" matTooltip="Please fill this field before contract">
+                                            </mat-form-field>
+                                        </p>
+                                    </div>
+                                    <div class="col-md-3 pt-3">
+                                        <mat-slide-toggle matInput formControlName="no_call" id="no_call" matTooltip="Priority">
+                                            <span *ngIf="personForm.value.no_call == true; else elseBlock" [ngStyle]="{'font-weight' : '600', 'color': '#e91e63'}">
+                                               NO MORE CALL
+                                            </span>
+                                            <ng-template #elseBlock>Unsubscribe</ng-template>
+                                        </mat-slide-toggle>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <!--Second row-->
+                                    <div class="col-md-2">
+                                        <p>
+                                            <mat-form-field appearance="legacy">
+                                                <mat-label>First Phone Number</mat-label>
+                                                <input matInput placeholder="First Phone Number" formControlName="phone_1" matTooltip="Do not delete this data">
+                                            </mat-form-field>
+                                        </p>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <p>
+                                            <mat-form-field appearance="legacy">
+                                                <mat-label>Second Phone Number</mat-label>
+                                                <input matInput placeholder="Secont Phone Number" formControlName="phone_2" matTooltip="Not required">
+                                            </mat-form-field>
+                                        </p>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <p>
+                                            <mat-form-field appearance="legacy">
+                                                <mat-label>Email</mat-label>
+                                                <input matInput placeholder="Secont Phone Number" formControlName="email" id="email" matTooltip="This is required data" [ngClass]="{ 'is-invalid': submitted && f.email.errors }">
+                                            </mat-form-field>
+                                        </p>
+                                        <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                                            <div *ngIf="f.email.errors.required">Email is required</div>
+                                            <div *ngIf="f.email.errors.email">Email must be a valid email address</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 pt-3">
+                                        <mat-slide-toggle matInput formControlName="no_call" id="no_call" color="warn" matTooltip="Unsubscribe from emails and SMS">
+                                            <span *ngIf="personForm.value.no_call == true; else elseBlock" [ngStyle]="{'font-weight' : '600', 'color': '#f44336'}">
+                                                NO MORE CALL
+                                            </span>
+                                            <ng-template #elseBlock>Unsubscribe</ng-template>
+                                        </mat-slide-toggle>
+                                    </div>
+                                </div>
+                                <div class="row">
+
+                                    <div class="col-md-4">
+                                        <p>
+                                            <mat-form-field appearance="legacy">
+                                                <mat-label>Home Address</mat-label>
+                                                <input matInput placeholder="Home Address" formControlName="address" matTooltip="This field is required for contract">
+                                            </mat-form-field>
+                                        </p>
+                                    </div>
+
+                                    <div class="col-md-2">
+                                        <p>
+                                            <mat-form-field appearance="legacy">
+                                                <mat-label>Branch</mat-label>
+                                                <mat-select formControlName=branch_id [ngClass]="{ 'is-invalid': submitted && f.branch_id.errors }" (change)="ChangingValue($event)">
+                                                    <mat-option *ngFor="let branch of branches" [value]="branch.branch_id">
+                                                        {{branch.name}}
+                                                    </mat-option>
+                                                </mat-select>
+                                                <div *ngIf="submitted && f.branch_id.errors" class="invalid-feedback">
+                                                    <div *ngIf="f.branch_id.errors.required">branch is required</div>
+                                                </div>
+                                            </mat-form-field>
+                                        </p>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <p>
+                                            <mat-form-field appearance="legacy">
+                                                <mat-label>Product</mat-label>
+                                                <mat-select formControlName=product_group_id [ngClass]="{ 'is-invalid': submitted && f.product_group_id.errors }" (change)="ChangingProductGroup($event)">
+                                                    <mat-option *ngFor="let product_group of product_groups" [value]="product_group.product_group_id">
+                                                        {{product_group.description}}
+                                                    </mat-option>
+                                                </mat-select>
+                                                <div *ngIf="submitted && f.product_group_id.errors" class="invalid-feedback">
+                                                    <div *ngIf="f.product_group_id.errors.required">product is required</div>
+                                                </div>
+                                                <div *ngIf="singleCourse">
+                                                    <mat-select formControlName=product_id [ngClass]="{ 'is-invalid': submitted && f.product_id.errors }" (change)="ChangingValue($event)">
+                                                        <mat-option>Choose Product</mat-option>
+                                                        <mat-option *ngFor="let product of products" [value]="product.product_id">
+                                                            {{product.description}}
+                                                        </mat-option>
+                                                    </mat-select>
+                                                    <div *ngIf="submitted && f.product_id.errors" class="invalid-feedback">
+                                                        <div *ngIf="f.product_id.errors.required">product is required</div>
+                                                    </div>
+                                                </div>
+                                            </mat-form-field>
+                                        </p>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <p>
+                                            <mat-form-field appearance="legacy">
+                                                <mat-label>Source details</mat-label>
+                                                <input matInput placeholder="Source details" formControlName="source_details" matTooltip="From source">
+                                            </mat-form-field>
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <button mat-raised-button type="submit" class="mr-3 button-green-outline">Update</button>
+                                <button mat-raised-button (click)="cancel()" class="mr-3 button-orange-outline">Exit</button>
+
+                            </mat-card>
+                        </mat-tab>
+                        <mat-tab label="Files CV Examination">
+                            <mat-card>
+                                <div *ngIf="ifCV" class="mb-2" (click)="openModal('custom-modal-1')">
+                                    <label>Person CV please click on view</label>
+                                    <textarea [(ngModel)]="cv" dir="rtl" [ngStyle]="{'cursor':'pointer'}" class="text-right" placeholder="CV" cols="39" rows="7" disabled>
+                                    </textarea>
+                                </div>
+                                <div *ngIf="ifTest" class="mb-2" (click)="openModal('custom-modal-2')">
+                                    <label>Person Tests results please click on view</label>
+                                    <textarea [(ngModel)]="test" [ngStyle]="{'cursor':'pointer'}" placeholder="testText" cols="39" rows="7" disabled>
+                                </textarea>
+                                </div>
+                                <file-cmp></file-cmp>
+                            </mat-card>
+                        </mat-tab>
+                    </mat-tab-group>
+                </form>
+            </div>
+            <div class="col-sm-1 pt-4">
+                <action-create-cmp></action-create-cmp>
+            </div>
+        </div>
+
+        <!--iframe src='https://view.officeapps.live.com/op/embed.aspx?src=["https://file-examples.com/wp-content/uploads/2017/02/file-sample_100kB.docx"]' width='px' height='px' frameborder='0'>
+        </iframe>
+        <iframe src="https://docs.google.com/gview?url=https://file-examples.com/wp-content/uploads/2017/02/file-sample_100kB.docx&embedded=true">
+        </iframe-->
+
+
+        <div class="row">
+            <actions-cmp></actions-cmp>
+        </div>
+    </div>
+
+
+    <jw-modal id="custom-modal-1">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closeModal('custom-modal-1');">
+    <span aria-hidden="true">&times;</span>
+  </button>
+        <h4>Person's CV</h4>
+        <textarea [(ngModel)]="cv" dir="rtl" [ngStyle]="{'cursor':'pointer'}" class="text-right" placeholder="CV" cols="95" rows="15" disabled>
+  </textarea>
+    </jw-modal>
+
+    <jw-modal id="custom-modal-2">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closeModal('custom-modal-2');">
+    <span aria-hidden="true">&times;</span>
+  </button>
+        <h4>Examination Results</h4>
+        <textarea cols="95" rows="15" [(ngModel)]="test" disabled>
+</textarea>
+    </jw-modal>

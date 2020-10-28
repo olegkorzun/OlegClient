@@ -1,0 +1,68 @@
+<mat-card>
+    <table datatable class="table table-hover">
+        <tbody>
+            <tr *ngFor="let act of action">
+                <td>
+                    <action-type [actionType]="act.type" (click)="updateActtion(act)"></action-type>
+                </td>
+                <td>
+                    <action-status [status]="act.status" (click)="chooseActionStatus($event,act.action_id)"></action-status>
+                </td>
+                <td>
+                    {{ act.create_date | date: 'dd/MM/yyyy'}}
+                </td>
+                <td style="text-align:right" dir="rtl">
+                    {{ act.subject }}
+                </td>
+                <td style="text-align:right" dir="rtl">
+                    {{ act.message }}
+                    <!--div *ngIf="act.type !== 'LID'; else elseBlock">
+              {{ act.message }}
+            </div>
+            <ng-template #elseBlock> 
+              LID
+            </ng-template-->
+                </td>
+                <td>
+                    <div *ngIf="act.type === 'Appointment' || act.type === 'Task'; else elseBlock">
+                        {{ act.start_date | date: 'dd/MM/yyyy'}}
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</mat-card>
+
+
+<jw-modal id="custom-modal-151">
+    <!--button 
+  type="button" 
+  class="close" 
+  data-dismiss="modal" 
+  aria-label="Close" 
+  (click)="closeModal('custom-modal-151');">
+    <span aria-hidden="true">&times;</span>
+  </button-->
+    <table class="table table-hover">
+        <tbody>
+            <tr class="clickable" (click)="updateActionStaus('completed')">
+                <td>
+                    <mat-icon aria-hidden="false" class="menu_icon lime-icon" matTooltip="Completed" aria-label="Task menu">done</mat-icon>
+                </td>
+                <td>Complete</td>
+            </tr>
+            <tr class="clickable" (click)="updateActionStaus('canceled')">
+                <td>
+                    <mat-icon aria-hidden="false" class="menu_icon" color="warn" matTooltip="Canceled" aria-label="Task menu">clear</mat-icon>
+                </td>
+                <td>Cancel</td>
+            </tr>
+            <tr class="clickable" (click)="updateActionStaus('new')">
+                <td>
+                    <mat-icon aria-hidden="false" class="menu_icon blue-icon" matTooltip="New" aria-label="Task menu">add</mat-icon>
+                </td>
+                <td>New</td>
+            </tr>
+        </tbody>
+    </table>
+</jw-modal>

@@ -1,0 +1,47 @@
+/* Note: If you're using an SVG icon, you should make the class target the `<svg>` element */
+
+.lime-icon {
+    color: #8bc34a;
+}
+
+.green-icon svg {
+    fill: green;
+}
+
+.blue-icon {
+    color: #2196f3;
+}
+
+.menu_icon:hover {
+    cursor: pointer;
+}
+
+.button-green {
+    background-color: #8bc34a;
+}
+
+.button-orange {
+    background-color: #ff9800;
+}
+
+.button-orange-outline {
+    border: 2px solid #ff9800 !important;
+    box-sizing: border-box;
+}
+
+.button-orange-outline:hover {
+    background-color: #ff9800;
+}
+
+.button-green-outline {
+    border: 2px solid #8bc34a !important;
+    box-sizing: border-box;
+}
+
+.button-green-outline:hover {
+    background-color: #8bc34a;
+}
+
+.customClass {
+    color: red;
+}
